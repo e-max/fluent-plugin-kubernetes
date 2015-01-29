@@ -22,13 +22,13 @@ Or install it yourself as:
 
 Add this section in fluend config
 
-``
+```
 <match docker.container.var.lib.docker.containers.*.*.log>
   type kubernetes
   tag docker.container.${container_name}
 </match>
 
-``
+```
 
 You can use *container_name*  *k8s_container_name* *k8s_pod_name* placeholders in tag directive.
 
