@@ -26,15 +26,21 @@ module Fluent
     private
     def prepare_tag(info)
       tag = @tag
-      tag = tag.gsub(/\$\{container_name\}/, info['container_name'] || info['container_id'])
+      tag = tag.gsub(/\$\{container_name\}/, info['container_name'] || info['container_id'] || "")
       tag = tag.gsub(/\$\{k8s_container_name\}/, info['k8s_container_name'] || "")
       tag = tag.gsub(/\$\{k8s_pod_name\}/, info['k8s_pod_name'] || "")
       tag
     end
 
     def get_container_id(tag)
-      tag_parts = tag.split('.')
-      tag_parts[6]
+		begin
+		  tag_parts = tag.split('.')
+		  id = tag_parts[6]
+		rescue Exception => e
+		  puts "GOT ERROR", e
+		  id = nil
+		end
+		id
     end
 
     def get_info(id)
